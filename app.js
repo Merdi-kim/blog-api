@@ -30,8 +30,6 @@ app.use((error, req, res, next) => {
 
 mongoose.connect('mongodb+srv://merdi:xvYNYsCh7zBIYziw@cluster0.t7ton.mongodb.net/blog-api?retryWrites=true&w=majority')
  .then(connection => {
-    app.listen(4000, () => {
-     console.log('server started')
-})
+    app.listen(process.env.PORT || 4000)
  }).catch(err => console.log(err))
 
