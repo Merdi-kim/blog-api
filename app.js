@@ -1,9 +1,11 @@
 const express = require('express')
-const {fetchPostsRoute, createPostRoute, editPostRoute, deletePostRoute} = require('./routes/Post')
-const {signinRoute, signupRoute} = require('./routes/User')
+const {config} = require('dotenv')
+const postRoutes = require('./routes/Post')
+const userRoutes  = require('./routes/User')
 const mongoose = require('mongoose')
 
 const app = express()
+config()
 
 app.use(express.json())
 
@@ -14,12 +16,8 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use(createPostRoute)
-app.use(editPostRoute)
-app.use(deletePostRoute)
-app.use(signupRoute)
-app.use(signinRoute)
-app.use(fetchPostsRoute)
+app.use(postRoutes)
+app.use(userRoutes)
 
 app.use((error, req, res, next) => {
     const status = error.statusCode || 500
@@ -27,9 +25,10 @@ app.use((error, req, res, next) => {
     res.status(status).json({message:message})
 }) 
 
-
-mongoose.connect('mongodb+srv://merdi:xvYNYsCh7zBIYziw@cluster0.t7ton.mongodb.net/blog-api?retryWrites=true&w=majority')
+mongoose.connect(process.env.DB_CONNECTOR)
  .then(connection => {
-    app.listen(process.env.PORT || 4000)
+    app.listen(process.env.PORT || 4000, () => {
+        console.log('server up and running')
+    })
  }).catch(err => console.log(err))
 

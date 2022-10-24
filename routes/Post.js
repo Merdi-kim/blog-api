@@ -4,12 +4,12 @@ const {fetchPostsHandler, createPostHandler, editPostHandler, deletePostHandler}
 const router = express.Router()
 
 
-const fetchPostsRoute = router.get('/', fetchPostsHandler)
+router.get('/', fetchPostsHandler)
 
-const createPostRoute = router.post('/createPost', createPostHandler)
+router.post('/createPost', createPostHandler)
 
-const editPostRoute = router.post('/editPost', editPostHandler)
+router.put('/editPost', editPostHandler)
 
-const deletePostRoute = router.post('/deletePost', deletePostHandler)
+router.delete('/deletePost', deletePostHandler)
 
-module.exports = {fetchPostsRoute, createPostRoute, editPostRoute, deletePostRoute}
+module.exports = router

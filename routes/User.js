@@ -4,15 +4,14 @@ const {signinHandler, signupHandler} = require('../controllers/User')
 
 const router = express.Router()
 
-
-const signupRoute = router.post('/signup',[
+const checks = [
     body('email').isEmail().withMessage('Enter a valid email'),
     body('password').isLength({min:5}).withMessage('Password should be at least 5 characters long')
-], signupHandler)
+]
 
-const signinRoute = router.post('/signin',[
-    body('email').isEmail().withMessage('Enter a valid email'),
-    body('password').isLength({min:5}).withMessage('Password should be at least 5 characters long')
-], signinHandler)
 
-module.exports = {signupRoute, signinRoute}
+router.post('/signup',checks, signupHandler)
+
+router.post('/signin',checks, signinHandler)
+
+module.exports = router
